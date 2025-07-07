@@ -171,10 +171,10 @@ function UploadForm() {
       
         <div className="h-4/5 w-2/5  flex  justify-center flex-col ">
       
-          <div className="grid grid-cols-3 gap-4 items-center justify-center hidden md:block">
+          <div className="grid grid-cols-3 gap-4 items-center justify-center ">
             {items.map((item) => (
               <img
-                className="h-1/2  object-cover hover:scale-105 hover:shadow-lg transition-all duration-300"
+                className="h-1/2  object-cover hover:scale-105 hover:shadow-lg transition-all duration-300 hidden md:block"
                 src={item}
               />
             ))}
