@@ -6,7 +6,6 @@ import Navbar from "./Navbar";
 import "/src/index.css";
 import { FaDownload } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
-import { motion } from "framer-motion";
 import FadeInOnScroll from "../UIComponents/FadeInScroll";
 function UploadForm() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -101,7 +100,7 @@ function UploadForm() {
         ref={firstRef}
         className="h-screen snap-start flex items-center justify-center  text-white "
       >
-        <div className="h-15 w-screen   absolute z-50 top-0 flex place-items-center backdrop-blur-md bg-black/30   border border-white/20 p-8 rounded-2xl shadow-lg w-96">
+        <div className="h-15 sm:h-10 md:h-10 lg:h-15 w-screen   absolute z-50 top-0 flex place-items-center backdrop-blur-md bg-black/30   border border-white/20 p-8 rounded-2xl shadow-lg w-96">
           <Navbar />
         </div>
         <div className="h-4/5 w-3/5  flex items-center justify-center flex-col">
