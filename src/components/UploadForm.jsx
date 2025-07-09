@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 import "/src/index.css";
 import { FaDownload } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
-import { motion } from "framer-motion";
+
 import FadeInOnScroll from "../UIComponents/FadeInScroll";
 function UploadForm() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -14,8 +14,18 @@ function UploadForm() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [height, setHeight] = useState(5.0);
-  const [stlUrl, setStlUrl] = useState("/loadingModel.stl");
+  const [stlUrl, setStlUrl] = useState("/AskModel.stl");
   const [stlFilename, setStlFilename] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const Loading = () => (
+    <div
+    className="border rounded h-full w-full  backdrop-blur-md border border-white/50  rounded-2xl shadow"
+    > <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 place-items-center">Your Image is being Processed. Please Wait...
+  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+</div></div>
+  
+
+  );
   const items = [
     "samples/hulk.png",
 
@@ -49,10 +59,12 @@ function UploadForm() {
     multiple: false,
   });
 
-
-
   const handleSubmit = async (e) => {
-    console.log(apiUrl);
+     if (stlUrl !== "/AskModel.stl") {
+                    await handleDelete(); 
+                  }
+    setLoading(true);
+  
     e.preventDefault();
     if (!file) return alert("Please upload an image.");
     scrollTo(secondRef);
@@ -65,7 +77,6 @@ function UploadForm() {
     const filename = res.data.filename;
     setStlFilename(filename);
 
-
     const downloadRes = await axios.get(
       `${apiUrl}/download-stl/?filename=${filename}`,
       {
@@ -73,26 +84,23 @@ function UploadForm() {
       }
     );
 
-
     const blobUrl = URL.createObjectURL(downloadRes.data);
-    setStlUrl(blobUrl); 
+    setStlUrl(blobUrl);
+    setLoading(false);
   };
 
   const handleDelete = async () => {
-    if (!stlFilename) return alert("No STL filename to delete.");
+   
 
     try {
       await axios.delete(`${apiUrl}/delete-stl/?filename=${stlFilename}`);
 
-      setStlUrl("/loadingModel.stl");
+      setStlUrl("/AskModel.stl");
       setStlFilename(null);
     } catch (error) {
-      alert(
-        "Error deleting STL: " + (error.response?.data?.detail || error.message)
-      );
+     
     }
   };
-
 
   return (
     <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
@@ -101,7 +109,7 @@ function UploadForm() {
         ref={firstRef}
         className="h-screen snap-start flex items-center justify-center  text-white "
       >
-        <div className="h-15 w-screen   absolute z-50 top-0 flex place-items-center backdrop-blur-md bg-black/30   border border-white/20 p-8 rounded-2xl shadow-lg w-96">
+        <div className="h-15 sm:h-10 md:h-10 lg:h-15 w-screen   absolute z-50 top-0 flex place-items-center backdrop-blur-md bg-black/30   border border-white/20  rounded-2xl shadow-lg w-96">
           <Navbar />
         </div>
         <div className="h-4/5 w-3/5  flex items-center justify-center flex-col">
@@ -161,27 +169,26 @@ function UploadForm() {
           <button
             onClick={handleSubmit}
             type="submit"
-            className=" w-3/4 px-6 py-3 bg-white/80
+            className=" w-3/4 px-6 py-3 bg-white/80 cursor-pointer
 
              text-black font-semibold font-croboto rounded shadow-md hover:from-purple-600 hover:to-indigo-700 hover:scale-105 hover:shadow-lg hover:bg-white/90 transition-all duration-300"
           >
             Generate Model
           </button>
         </div>
-      +
+        
         <div className="h-4/5 w-2/5  flex  justify-center flex-col">
-      
           <div className="grid grid-cols-3 gap-4 items-center justify-center">
             {items.map((item) => (
               <img
-                className="h-1/2  object-cover hover:scale-105 hover:shadow-lg transition-all duration-300"
+                className="h-1/2  object-cover hover:scale-105 hover:shadow-lg transition-all duration-300 hidden md:block"
                 src={item}
               />
             ))}
           </div>
 
           <FadeInOnScroll>
-            <p className="text-lg5 md:text-base text-white/80 font-croboto leading-relaxed">
+            <p className="text-lg5 md:text-base text-white/80 font-croboto leading-relaxed hidden md:block">
               Give it a try! Just drag and drop one of the sample images above.
             </p>
           </FadeInOnScroll>
@@ -194,17 +201,17 @@ function UploadForm() {
         className="h-screen snap-start flex flex-col items-center justify-center text-white"
       >
         {stlUrl && (
-          <div className="h-150 w-4/5 ">
-            <STLViewer stlUrl={stlUrl} />
-            <div className="flex  mt-5 h-12">
+          <div className="relative h-150 w-4/5 ">
+            {loading ? <Loading/>:  <STLViewer stlUrl={stlUrl} />}
+           {!loading && <div className="flex  mt-5 h-12">
               <button
-                className=" w-1/2   bg-white/50 flex items-center justify-center
+                className=" w-1/2   bg-white/50 flex items-center justify-center cursor-pointer
 
              text-black font-semibold font-croboto rounded shadow-md   hover:shadow-lg hover:bg-white/90 transition-all duration-300"
                 onClick={async () => {
                   scrollTo(firstRef);
-                  if (stlUrl !== "/loadingModel.stl") {
-                    await handleDelete(); // <-- Call the function
+                  if (stlUrl !== "/AskModel.stl") {
+                    await handleDelete(); 
                   }
                 }}
               >
@@ -213,7 +220,7 @@ function UploadForm() {
               </button>
 
               <button
-                className=" w-1/2 bg-white/80
+                className=" w-1/2 bg-white/80 cursor-pointer
 
              text-black font-semibold font-croboto rounded shadow-md  hover:bg-gradient-to-r hover:from-indigo-400 hover:to-blue-500  hover:shadow-lg hover:bg-white/90 transition-all duration-300"
               >
@@ -225,7 +232,9 @@ function UploadForm() {
                   Download Model <FaDownload />
                 </a>
               </button>
-            </div>
+            </div>}
+
+            
           </div>
         )}
       </div>

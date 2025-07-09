@@ -1,6 +1,6 @@
 import React, { Suspense, useRef, useEffect } from "react";
 import { Canvas, useLoader, useThree } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Html } from "@react-three/drei";
 import { STLLoader } from "three-stdlib";
 import * as THREE from "three";
 import "/src/index.css";
@@ -23,7 +23,7 @@ function STLModel({ url, controlsRef }) {
 
     const fovRadians = (camera.fov * Math.PI) / 180;
     const aspect = size.width / size.height;
-    const distance = (maxDim / 2) / Math.tan(fovRadians / 2) / 0.8;
+    const distance = maxDim / 2 / Math.tan(fovRadians / 2) / 0.8;
 
     camera.position.set(distance, distance * 0.75, distance);
     camera.lookAt(0, 0, 0);
@@ -34,14 +34,14 @@ function STLModel({ url, controlsRef }) {
       controlsRef.current.update();
     }
   }, [geometry, camera, controlsRef, size]);
-
+  
   return (
     <mesh ref={meshRef} geometry={geometry} rotation={[-Math.PI / 2, 0, 0]}>
       <meshStandardMaterial
         color="pink"
         metalness={0.3}
         roughness={0.5}
-        side={THREE.DoubleSide} 
+        side={THREE.DoubleSide}
       />
     </mesh>
   );
@@ -50,7 +50,10 @@ const STLViewer = ({ stlUrl }) => {
   const controlsRef = useRef();
 
   return (
-    <div className="border rounded h-full w-full  backdrop-blur-md border border-white/50  rounded-2xl shadow" style={{ position: "relative" }}>
+    <div
+      className="border rounded h-full w-full  backdrop-blur-md border border-white/50  rounded-2xl shadow"
+      style={{ position: "relative" }}
+    >
       <Canvas
         camera={{ position: [0, 0, 100], fov: 45 }}
         style={{ height: "100%", width: "100%" }}

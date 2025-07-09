@@ -6,7 +6,7 @@
     --font-croboto:Roboto Condensed,'sans-serif';
 }
 body {
- background: url("blueDot.jpg") no-repeat  ;
+ background: url("/blueDot.jpg") no-repeat  ;
  background-size: cover;
 
 }
