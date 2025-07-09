@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 import "/src/index.css";
 import { FaDownload } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
-
+import { motion } from "framer-motion";
 import FadeInOnScroll from "../UIComponents/FadeInScroll";
 function UploadForm() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -16,7 +16,7 @@ function UploadForm() {
   const [height, setHeight] = useState(5.0);
   const [stlUrl, setStlUrl] = useState("/AskModel.stl");
   const [stlFilename, setStlFilename] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const Loading = () => (
     <div
     className="border rounded h-full w-full  backdrop-blur-md border border-white/50  rounded-2xl shadow"
@@ -109,7 +109,7 @@ function UploadForm() {
         ref={firstRef}
         className="h-screen snap-start flex items-center justify-center  text-white "
       >
-        <div className="h-15 sm:h-10 md:h-10 lg:h-15 w-screen   absolute z-50 top-0 flex place-items-center backdrop-blur-md bg-black/30   border border-white/20  rounded-2xl shadow-lg w-96">
+        <div className="h-15 w-screen   absolute z-50 top-0 flex place-items-center backdrop-blur-md bg-black/30   border border-white/20 p-8 rounded-2xl shadow-lg w-96">
           <Navbar />
         </div>
         <div className="h-4/5 w-3/5  flex items-center justify-center flex-col">
@@ -176,8 +176,9 @@ function UploadForm() {
             Generate Model
           </button>
         </div>
-        
+      
         <div className="h-4/5 w-2/5  flex  justify-center flex-col">
+      
           <div className="grid grid-cols-3 gap-4 items-center justify-center">
             {items.map((item) => (
               <img

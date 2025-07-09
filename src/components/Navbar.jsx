@@ -1,6 +1,5 @@
 import "/src/index.css";
 import { FaGithub, FaLinkedin, FaInfoCircle } from "react-icons/fa";
-
 import FadeInOnScroll from "../UIComponents/FadeInScroll";
 function Navbar() {
   return (
