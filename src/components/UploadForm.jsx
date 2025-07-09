@@ -16,7 +16,7 @@ function UploadForm() {
   const [height, setHeight] = useState(5.0);
   const [stlUrl, setStlUrl] = useState("/AskModel.stl");
   const [stlFilename, setStlFilename] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const Loading = () => (
     <div
     className="border rounded h-full w-full  backdrop-blur-md border border-white/50  rounded-2xl shadow"
