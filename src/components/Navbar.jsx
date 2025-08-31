@@ -15,10 +15,10 @@ function Navbar() {
 
       <div className="flex gap-4 text-2xl p-2">
         <a
-          href="https://github.com/Dheeraj-Chintala"
+          href="https://github.com/Dheeraj-Chintala/Quick-3D"
           target="_blank"
           rel="noopener noreferrer"
-          title="Developer-GitHub"
+          title="Source Code-GitHub"
         >
           <FaGithub className="hover:scale-150 hover:shadow-lg transition-all duration-200" />
         </a>
