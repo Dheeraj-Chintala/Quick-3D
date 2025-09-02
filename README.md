@@ -28,9 +28,9 @@ Quick 3D is a React-based web application that allows users to seamlessly conver
 
   ## Screenshots
 
-<img src="public/screenshot1.png"></img>
-<img src="public/screenshot2.png"></img>
-<img src="public/screenshot3.png"></img>
+<img src="public/img1.png"></img>
+<img src="public/img2.png"></img>
+<img src="public/img3.png"></img>
 
 
 
