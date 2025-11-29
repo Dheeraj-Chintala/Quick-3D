@@ -1,0 +1,35 @@
+name: Deploy to EC2 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Start SSH Agent
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${{ secrets.EC2_SSH_KEY }}"
+
+      - name: Add EC2 to known hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.EC2_PUBLIC_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          ssh ubuntu@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+            docker pull dheerajchintala/quick3d:latest
+
+            docker stop quick3d-app || true
+            docker rm quick3d-app || true
+
+            docker run -d \
+              --name quick3d-app \
+              -p 80:80 \
+              dheerajchintala/quick3d:latest
+          EOF
