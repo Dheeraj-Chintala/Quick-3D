@@ -18,7 +18,9 @@ jobs:
 
       - name: Add EC2 to known hosts
         run: |
-          ssh-keyscan -H ${{ secrets.EC2_PUBLIC_IP }} >> ~/.ssh/known_hosts
+         mkdir -p ~/.ssh
+         ssh-keyscan -H ${{ secrets.EC2_PUBLIC_IP }} >> ~/.ssh/known_hosts
+
 
       - name: Deploy to EC2
         run: |
