@@ -1,14 +1,14 @@
-import { useState } from "react";
-
-import "./App.css";
-import UploadForm from "./components/UploadForm";
+import React from 'react';
+import Navbar from './components/Layout/Navbar';
+import Workspace from './components/Editor/Workspace';
+import './App.css'; 
 
 function App() {
   return (
-    <>
-      <UploadForm />
-      
-    </>
+    <div className="w-screen h-screen overflow-hidden bg-black">
+      <Navbar />
+      <Workspace />
+    </div>
   );
 }
 

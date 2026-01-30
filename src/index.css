@@ -1,15 +1,76 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
-@theme{
-    --font-croboto:Roboto Condensed,'sans-serif';
-}
-body {
- background: url("/paperbackgroundblack.jpg") no-repeat  ;
- background-size: cover;
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
+  /* Color System */
+  --color-bg-main: #d2d2d2;
+  --color-bg-card: #f3f4f6;
+  --color-text-primary: #18191a;
+  --color-text-secondary: #000000;
+  --color-accent: #16a34a; /* Matte Green (green-600) */
+  --color-accent-hover: #15803d; /* green-700 */
+  --color-border: #e5e7eb;
 }
-html {
-  scroll-behavior: smooth;
+
+@theme {
+  --font-croboto: 'Boldonse', system-ui;
+  --font-inter: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Fallback/Custom Utility if @theme isn't enough */
+.font-croboto {
+  font-family: 'Boldonse', system-ui;
+}
+
+/* Dark Mode - Activated by 'dark' class on HTML tag */
+.dark {
+  --color-bg-main: #050505; /* Matte Black */
+  --color-bg-card: #121212; /* Dark Gray */
+  --color-text-primary: #d2d2d2;
+  --color-text-secondary: #9ca3af;
+  --color-accent: #22c55e; /* Matte Green (green-500) */
+  --color-accent-hover: #16a34a;
+  --color-border: #27272a;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-main); 
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border); 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary); 
+}
+
+/* Dot Grid Pattern */
+.bg-dot-grid {
+  background-image: radial-gradient(var(--color-text-secondary) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgb(0, 0, 0) 40%, transparent 100%);
+  opacity: 0.4;
 }
